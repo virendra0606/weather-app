@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather App</title>
+  <link rel="stylesheet" href="{% static "whether.css" %}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+  <div class="container">
+    <div class="weather-card">
+      <div class="header">
+        <h1 class="city-name">{{ city }}</h1>
+        <p class="date">Sunday, 21 Sept 2025</p>
+      </div>
+      <p style= "color:black">{{jsondata}}</p>
+      {% comment %} <p style= "color:black">
+        {% for i in jsondata %}
+          {{i}}
+        {% endfor %}
+        <p> {% endcomment %}
+
+      <div class="main-info">
+        <img src="" alt="Weather Icon" class="weather-icon" />
+        <div class="temp-info">
+          <h2 class="temperature">{{ temperature }}</h2>
+          <p class="condition">Clear Sky</p>
+        </div>
+      </div>
+
+      <div class="weather-details">
+        <div class="detail">
+          <i class="fas fa-temperature-high"></i>
+          <span>Feels like: <strong>{{ temperature }}</strong></span>
+        </div>
+        <div class="detail">
+          <i class="fas fa-wind"></i>
+          <span>Wind: <strong>15 km/h</strong></span>
+        </div>
+        <div class="detail">
+          <i class="fas fa-tint"></i>
+          <span>Humidity: <strong>60%</strong></span>
+        </div>
+        <div class="detail">
+          <i class="fas fa-compress-alt"></i>
+          <span>Pressure: <strong>1012 hPa</strong></span>
+        </div>
+      </div>
+
+      <div class="footer">
+         <form method='post'>
+            {% csrf_token %}
+        <input type="text" id="cityInput" placeholder="Enter city name..." name="city" />
+        <button type="submit">search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+

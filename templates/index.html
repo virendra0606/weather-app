@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Detection App</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="weather-container">
+        <h1>🌦️ Weather Detection App</h1>
+        <form method='post'>
+            {% csrf_token %}
+        <input type="text" id="cityInput" placeholder="Enter city name..." name="city" />
+        <button type="submit">search</button>
+        </form>
+        <div id="weatherResult">
+           
+            <div id="weatherResult">
+    {% if cityname %}
+        <p>CITY: {{ city }}</p>
+        <p>COUNTRY: {{ country_code }}</p>
+        <p>LOCATION: {{ coordinate }}</p>
+        <p>TEMPERATURE: {{ temperature }}</p>
+        <p>PRESSURE: {{ pressure }}</p>
+        <p>WIND: {{ wind }}</p>
+        {{jsondata}}
+    {% else %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+
+
+            
+        </div>
+    </div>
+
+    
+</body>
+</html>

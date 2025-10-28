@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Dashboard</title>
+  <link rel="stylesheet" href="{% static 'weatherUi.css' %}" />
+</head>
+<body>
+    {{jsondata}}
+  <div class="container">
+    <!-- Header -->
+    <header class="top-bar">
+      <div class="dark-mode-toggle">
+        <input type="checkbox" id="dark-mode" />
+        <label for="dark-mode">Dark Mode</label>
+      </div>
+      <div class="search-bar">
+        <form method="post">
+            {% csrf_token %}
+        <input type="text" placeholder="Search for your preferred city..." />
+        <button type="submit" class="current-location">Enter Your City</button>
+        </form>
+      </div>
+    </header>
+
+    <!-- Main Weather Info -->
+    <section class="main-weather">
+      <div class="city-time">
+        <h2>{{Name}}</h2>
+        <h1>09:03</h1>
+        <p>Thursday, 31 Aug</p>
+      </div>
+
+      <div class="weather-details">
+        <div class="temperature">
+          <h1>{{temprature}}</h1>
+          <p>Feels like: 22°C</p>
+        </div>
+        <div class="weather-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png" alt="sunny" />
+          <h3>Sunny</h3>
+        </div>
+        <div class="extra-info">
+          <p>🌅 Sunrise: 06:37 AM</p>
+          <p>🌇 Sunset: 20:37 PM</p>
+          <p>💧 Humidity: 41%</p>
+          <p>🌬️ Wind: 2 km/h</p>
+          <p>🔽 Pressure: 997 hPa</p>
+          <p>🌞 UV: 8</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 Day Forecast -->
+    <section class="forecast">
+      <h3>5 Days Forecast:</h3>
+      <div class="days">
+        <div class="day"><p>🌤️ 20°C</p><span>Friday, 1 Sep</span></div>
+        <div class="day"><p>☀️ 22°C</p><span>Saturday, 2 Sep</span></div>
+        <div class="day"><p>☀️ 27°C</p><span>Sunday, 3 Sep</span></div>
+        <div class="day"><p>🌦️ 18°C</p><span>Monday, 4 Sep</span></div>
+        <div class="day"><p>🌧️ 16°C</p><span>Tuesday, 5 Sep</span></div>
+      </div>
+    </section>
+
+    <!-- Hourly Forecast -->
+    <section class="hourly">
+      <h3>Hourly Forecast:</h3>
+      <div class="hours">
+        <div class="hour"><p>12:00</p><span>☀️ 26°C</span><small>3 km/h</small></div>
+        <div class="hour"><p>15:00</p><span>☀️ 27°C</span><small>2 km/h</small></div>
+        <div class="hour"><p>18:00</p><span>🌤️ 27°C</span><small>2 km/h</small></div>
+        <div class="hour"><p>21:00</p><span>🌤️ 25°C</span><small>3 km/h</small></div>
+        <div class="hour"><p>00:00</p><span>☀️ 22°C</span><small>3 km/h</small></div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
