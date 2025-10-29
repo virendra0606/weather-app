@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="{% static 'weatherUi.css' %}" />
 </head>
 <body>
-    {{jsondata}}
   <div class="container">
     <!-- Header -->
     <header class="top-bar">
@@ -19,7 +18,7 @@
       <div class="search-bar">
         <form method="post">
             {% csrf_token %}
-        <input type="text" placeholder="Search for your preferred city..." />
+        <input type="text" placeholder="Search for your preferred city..." name="city" />
         <button type="submit" class="current-location">Enter Your City</button>
         </form>
       </div>
@@ -28,9 +27,9 @@
     <!-- Main Weather Info -->
     <section class="main-weather">
       <div class="city-time">
-        <h2>{{Name}}</h2>
-        <h1>09:03</h1>
-        <p>Thursday, 31 Aug</p>
+        <h2>{{city}}</h2>
+        <h1>{{current_Time}}</h1>
+        <p>{{current_date}}</p>
       </div>
 
       <div class="weather-details">
@@ -39,41 +38,57 @@
           <p>Feels like: 22°C</p>
         </div>
         <div class="weather-icon">
-          <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png" alt="sunny" />
-          <h3>Sunny</h3>
+          {% for mains in weather %}
+          {% if mains.main == "Sunny" %}
+          <img src="https://images.icon-icons.com/1370/PNG/96/if-weather-3-2682848_90785.png" alt="sunny" />
+          {% elif mains.main == "Clouds" %}
+          <img src="https://images.icon-icons.com/159/PNG/96/cloud_weather_22376.png" alt="clouds" />
+          {% elif mains.main == "Haze" %}
+          <img src="https://images.icon-icons.com/2505/PNG/96/sunny_weather_icon_150663.png" alt="haze" />
+          {% elif mains.main == "Rain" %}
+          <img src="https://images.icon-icons.com/1461/PNG/96/2998141-cloud-nature-rain-weather_99845.png" alt="rain" />
+          {% else %}
+          <img src="https://images.icon-icons.com/8/PNG/256/cloudyweather_cloud_inpart_day_wind_thunder_sunny_rain_darkness_nublad_1459.png" alt="rain" />
+          {% endif %}
+          <h3>{{mains.main}}</h3>
+          {% endfor %}
+          
         </div>
-        <div class="extra-info">
-          <p>🌅 Sunrise: 06:37 AM</p>
-          <p>🌇 Sunset: 20:37 PM</p>
-          <p>💧 Humidity: 41%</p>
-          <p>🌬️ Wind: 2 km/h</p>
-          <p>🔽 Pressure: 997 hPa</p>
+        {% comment %} <div class="extra-info">
+          <p>🌅 Sunrise: {{sunrise}}</p>
+          <p>🌇 Sunset: {{sunset}}</p>
+          <p>💧 Humidity: {{humidity}}%</p>
+          <p>🌬️ Wind: {{wind}}</p>
+          <p>🔽 Pressure: {{pressure}} hPa</p>
           <p>🌞 UV: 8</p>
-        </div>
+        </div> {% endcomment %}
       </div>
     </section>
 
     <!-- 5 Day Forecast -->
     <section class="forecast">
-      <h3>5 Days Forecast:</h3>
+      <h3>Today Weather Report:</h3>
       <div class="days">
-        <div class="day"><p>🌤️ 20°C</p><span>Friday, 1 Sep</span></div>
-        <div class="day"><p>☀️ 22°C</p><span>Saturday, 2 Sep</span></div>
-        <div class="day"><p>☀️ 27°C</p><span>Sunday, 3 Sep</span></div>
-        <div class="day"><p>🌦️ 18°C</p><span>Monday, 4 Sep</span></div>
-        <div class="day"><p>🌧️ 16°C</p><span>Tuesday, 5 Sep</span></div>
+        <div class="day"><p>🌅</p><span> Sunrise: {{sunrise}}</span></div>
+        <div class="day"><p>🌇</p><span> Sunset: {{sunset}}</span></div>
+        <div class="day"><p>💧</p><span> Humidity: {{humidity}}%</span></div>
+        <div class="day"><p>🌬️ </p><span> Wind: {{wind}}</span></div>
+        <div class="day"><p>🔽</p><span> Pressure: {{pressure}} hPa</span></div>
       </div>
     </section>
 
     <!-- Hourly Forecast -->
     <section class="hourly">
-      <h3>Hourly Forecast:</h3>
       <div class="hours">
-        <div class="hour"><p>12:00</p><span>☀️ 26°C</span><small>3 km/h</small></div>
-        <div class="hour"><p>15:00</p><span>☀️ 27°C</span><small>2 km/h</small></div>
-        <div class="hour"><p>18:00</p><span>🌤️ 27°C</span><small>2 km/h</small></div>
-        <div class="hour"><p>21:00</p><span>🌤️ 25°C</span><small>3 km/h</small></div>
-        <div class="hour"><p>00:00</p><span>☀️ 22°C</span><small>3 km/h</small></div>
+        <div {% if messages %}
+        <h3>Warning:</h3>
+            <ul>
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}</div>
+        
       </div>
     </section>
   </div>
